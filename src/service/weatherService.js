@@ -55,7 +55,7 @@ const formatForecastWeather = (data) => {
         return {
             // title:formatToLocalTime(d.dt,'Mumbai','ccc'),
             // title:d.dt,
-            title:formatToLocalTime(d.dt_txt,'hh:mm a'),
+            title:formatToLocalTimeString(d.dt_txt,'hh:mm a'),
             temp:d.main.temp,
             icon:d.weather[0].icon
         }
@@ -88,11 +88,22 @@ const getFormattedWeatherData = async (searchParams) => {
 
 
 // Function to get Local Date,Time using luxon
-//from seconds
-// const formatToLocalTime =(secs,zone,format="cccc, dd LLL yyyy' | Local Time: 'hh:mm a")=> DateTime.fromSeconds(secs).setZone(zone).toFormat(format)
+/*
+// Ye Main Hai Try Krna Baki :-
+
+const formatToLocalTime = (
+  secs,
+  zone,
+  format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
+) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+
+*/ 
+//from 
+
+const formatToLocalTime =(format="cccc, dd LLL yyyy' | Time: 'hh:mm a")=> DateTime.now().toFormat(format)
 
 //from string
-const formatToLocalTime =(secs,format="cccc, dd LLL yyyy' | Local Time: 'hh:mm a")=> DateTime.fromSQL(secs).toFormat(format)
+const formatToLocalTimeString =(secs,format="cccc, dd LLL yyyy' | Local Time: 'hh:mm a")=> DateTime.fromSQL(secs).toFormat(format)
 
 // Function for icon url
 const iconUrlFromCode = (code) =>
@@ -101,4 +112,4 @@ const iconUrlFromCode = (code) =>
 
 export default getFormattedWeatherData;
 
-export { formatToLocalTime, iconUrlFromCode };
+export { formatToLocalTime, iconUrlFromCode ,formatToLocalTimeString};
