@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { UilSearch, UilLocationPoint } from "@iconscout/react-unicons";
-import { toast } from "react-toastify";
+import { UilSearch } from "@iconscout/react-unicons";
+// import { toast } from "react-toastify";
 
 const Inputs = ({ setQuery, units, setUnits }) => {
   const [city, setCity] = useState("");
@@ -8,6 +8,8 @@ const Inputs = ({ setQuery, units, setUnits }) => {
   const handleSearchClick = () => {
     if (city !== "") setQuery({ q: city });
   };
+
+  /*
   //   Location Button Handle
   const handleLocationClick = () => {
     if (navigator.geolocation) {
@@ -24,6 +26,7 @@ const Inputs = ({ setQuery, units, setUnits }) => {
       });
     }
   };
+  */
   const handleUnitsChange = (e) => {
     const selectedUnit = e.currentTarget.name;
     if (units !== selectedUnit) setUnits(selectedUnit);
@@ -44,11 +47,11 @@ const Inputs = ({ setQuery, units, setUnits }) => {
           className="text-white cursor-pointer transition ease-out hover:scale-125"
           onClick={handleSearchClick}
         />
-        <UilLocationPoint
+        {/* <UilLocationPoint
           size={25}
           className="text-white cursor-pointer transition ease-out hover:scale-125"
           onClick={handleLocationClick}
-        />
+        /> */}
       </div>
       <div className="flex flex-row w-1/4 items-center justify-center">
         <button

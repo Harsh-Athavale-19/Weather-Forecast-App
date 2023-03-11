@@ -51,17 +51,17 @@ const formatCurrentWeather = (data) => {
 // Function to format forecast weather
 const formatForecastWeather = (data) => {
   let { list, city } = data;
-  let timezone = getTimezone(city.name)
+  let timezone = getTimezone(city.name);
   list = list.slice(1, 6).map((d) => {
     return {
-      title:formatToLocalTime(d.dt,timezone,'hh:mm a'),
+      title: formatToLocalTime(d.dt, timezone, "hh:mm a"),
       temp: d.main.temp,
       icon: d.weather[0].icon,
     };
   });
-//   console.log("city",city);
-//   console.log("timezone",timezone);
-//   console.log("list",list);
+  //   console.log("city",city);
+  //   console.log("timezone",timezone);
+  //   console.log("list",list);
   return { timezone, list };
 };
 
@@ -87,11 +87,10 @@ const getFormattedWeatherData = async (searchParams) => {
 // Function to get Local Date,Time using luxon
 
 const formatToLocalTime = (
-    secs,
-    zone,
-    format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
-  ) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
-  
+  secs,
+  zone,
+  format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
+) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
 
 // Function for icon url
 const iconUrlFromCode = (code) =>
@@ -99,12 +98,12 @@ const iconUrlFromCode = (code) =>
 
 const getTimezone = (cityName) => {
   const cityLookup = cityTimezones.findFromCityStateProvince(cityName);
-//   const cityLookup = cityTimezones.lookupViaCity(cityName);
-  let timeZoneName =cityLookup[0].timezone
+  //   const cityLookup = cityTimezones.lookupViaCity(cityName);
+  let timeZoneName = cityLookup[0].timezone;
   console.log(timeZoneName);
-  return timeZoneName
+  return timeZoneName;
 };
 
 export default getFormattedWeatherData;
 
-export { formatToLocalTime, iconUrlFromCode,  };
+export { formatToLocalTime, iconUrlFromCode };
