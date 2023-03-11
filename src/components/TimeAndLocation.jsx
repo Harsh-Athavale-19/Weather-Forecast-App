@@ -4,10 +4,16 @@ import { formatToLocalTime } from '../service/weatherService'
 const TimeAndLocation = ({weather:{dt,timezone,name,country}}) => {
     return (
         <div>
-            <div className='flex items-center justify-center my-6'>
+            <div className='flex items-center justify-center my-3'>
                 <p className='text-white text-xl font-extralight'>
                     {/* Tuesday, 31 May 2022 | Local time: 12:46 PM */}
-                    {formatToLocalTime()}
+                    {formatToLocalTime(dt,timezone,)}
+                </p>
+            </div> 
+            <div className='flex items-center justify-center my-3'>
+                <p className='text-white text-xl font-extralight'>
+                    {/* Tuesday, 31 May 2022 | Local time: 12:46 PM */}
+                    {`Timezone :- ${timezone}`}
                 </p>
             </div>
 

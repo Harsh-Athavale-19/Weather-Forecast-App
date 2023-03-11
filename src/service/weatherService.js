@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+let cityTimezones = require("city-timezones");
 
 const API_KEY = "2aebd46de19bf3e918c2c0bcb2c85580";
 const BASE_URL = "http://api.openweathermap.org/data/2.5/";
@@ -49,25 +50,22 @@ const formatCurrentWeather = (data) => {
 };
 // Function to format forecast weather
 const formatForecastWeather = (data) => {
-    let {list,city}=data;
-    let timezone = city.name
-    list=list.slice(0,5).map(d=>{
-        return {
-            // title:formatToLocalTime(d.dt,'Mumbai','ccc'),
-            // title:d.dt,
-            title:formatToLocalTimeString(d.dt_txt,'hh:mm a'),
-            temp:d.main.temp,
-            icon:d.weather[0].icon
-        }
-    })
-    // console.log("city",city);
-    // console.log("timezone",timezone);
-    // console.log("list",list);
-    return{timezone,list}
-
+  let { list, city } = data;
+  let timezone = getTimezone(city.name)
+  list = list.slice(1, 6).map((d) => {
+    return {
+      title:formatToLocalTime(d.dt,timezone,'hh:mm a'),
+      temp: d.main.temp,
+      icon: d.weather[0].icon,
+    };
+  });
+//   console.log("city",city);
+//   console.log("timezone",timezone);
+//   console.log("list",list);
+  return { timezone, list };
 };
 
-// Function To get Formatted Weather data from both current and forecast 
+// Function To get Formatted Weather data from both current and forecast
 const getFormattedWeatherData = async (searchParams) => {
   // Get Current Formatted Data from 'weather'
   const formattedCurrentWeather = await getWeatherData(
@@ -83,33 +81,30 @@ const getFormattedWeatherData = async (searchParams) => {
     units: searchParams.units,
   }).then(formatForecastWeather);
 
-  return {...formattedCurrentWeather, ...formattedForecastWeather};
+  return { ...formattedCurrentWeather, ...formattedForecastWeather };
 };
 
-
 // Function to get Local Date,Time using luxon
-/*
-// Ye Main Hai Try Krna Baki :-
 
 const formatToLocalTime = (
-  secs,
-  zone,
-  format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
-) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
-
-*/ 
-//from 
-
-const formatToLocalTime =(format="cccc, dd LLL yyyy' | Time: 'hh:mm a")=> DateTime.now().toFormat(format)
-
-//from string
-const formatToLocalTimeString =(secs,format="cccc, dd LLL yyyy' | Local Time: 'hh:mm a")=> DateTime.fromSQL(secs).toFormat(format)
+    secs,
+    zone,
+    format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
+  ) => DateTime.fromSeconds(secs).setZone(zone).toFormat(format);
+  
 
 // Function for icon url
 const iconUrlFromCode = (code) =>
-    `https://openweathermap.org/img/wn/${code}@2x.png`;
+  `https://openweathermap.org/img/wn/${code}@2x.png`;
 
+const getTimezone = (cityName) => {
+  const cityLookup = cityTimezones.findFromCityStateProvince(cityName);
+//   const cityLookup = cityTimezones.lookupViaCity(cityName);
+  let timeZoneName =cityLookup[0].timezone
+  console.log(timeZoneName);
+  return timeZoneName
+};
 
 export default getFormattedWeatherData;
 
-export { formatToLocalTime, iconUrlFromCode ,formatToLocalTimeString};
+export { formatToLocalTime, iconUrlFromCode,  };
