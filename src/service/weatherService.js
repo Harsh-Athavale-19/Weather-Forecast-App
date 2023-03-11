@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-let cityTimezones = require("city-timezones");
+import getTimezone from "./locationTimeService";
 
 const API_KEY = "2aebd46de19bf3e918c2c0bcb2c85580";
 const BASE_URL = "http://api.openweathermap.org/data/2.5/";
@@ -8,11 +8,12 @@ const BASE_URL = "http://api.openweathermap.org/data/2.5/";
 // infoType :- weather,forecast,onecall
 // searchParams :- lat,lon,city_name,etc
 
-const getWeatherData = (infoType, searchParams) => {
+const getWeatherData = async (infoType, searchParams) => {
   const url = new URL(BASE_URL + infoType);
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
 
-  return fetch(url).then((res) => res.json());
+  const res = await fetch(url);
+  return await res.json();
 };
 
 // Function to format current weather
@@ -49,9 +50,9 @@ const formatCurrentWeather = (data) => {
   };
 };
 // Function to format forecast weather
-const formatForecastWeather = (data) => {
+const formatForecastWeather = async (data) => {
   let { list, city } = data;
-  let timezone = getTimezone(city.name);
+  let timezone = await getTimezone(city.coord.lat, city.coord.lon);
   list = list.slice(1, 6).map((d) => {
     return {
       title: formatToLocalTime(d.dt, timezone, "hh:mm a"),
@@ -59,7 +60,7 @@ const formatForecastWeather = (data) => {
       icon: d.weather[0].icon,
     };
   });
-  //   console.log("city",city);
+  console.log("city", city);
   //   console.log("timezone",timezone);
   //   console.log("list",list);
   return { timezone, list };
@@ -95,14 +96,6 @@ const formatToLocalTime = (
 // Function for icon url
 const iconUrlFromCode = (code) =>
   `https://openweathermap.org/img/wn/${code}@2x.png`;
-
-const getTimezone = (cityName) => {
-  const cityLookup = cityTimezones.findFromCityStateProvince(cityName);
-  //   const cityLookup = cityTimezones.lookupViaCity(cityName);
-  let timeZoneName = cityLookup[0].timezone;
-  console.log(timeZoneName);
-  return timeZoneName;
-};
 
 export default getFormattedWeatherData;
 
