@@ -44,7 +44,6 @@ function App() {
     >
       <TopButtons setQuery={setQuery} />
       <Inputs setQuery={setQuery} units={units} setUnits={setUnits} />
-
       {weather && (
         <>
           <TimeAndLocation weather={weather} />
@@ -53,8 +52,8 @@ function App() {
           <Forecast title="forecast" items={weather.list} />
         </>
       )}
-
       <ToastContainer autoClose={5000} theme="colored" newestOnTop={true} />
+      <span className="copyright">Created by Harsh Athavale</span>
     </div>
   );
 }

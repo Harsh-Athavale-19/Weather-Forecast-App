@@ -9,11 +9,14 @@ const BASE_URL = "http://api.openweathermap.org/data/2.5/";
 // searchParams :- lat,lon,city_name,etc
 
 const getWeatherData = async (infoType, searchParams) => {
-  const url = new URL(BASE_URL + infoType);
-  url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
-
-  const res = await fetch(url);
-  return await res.json();
+  try {
+    const url = new URL(BASE_URL + infoType);
+    url.search = new URLSearchParams({ ...searchParams, appid: API_KEY });
+    const res = await fetch(url);
+    return await res.json();
+  } catch (error) {
+    console.log("API Could not fetch Data");
+  }
 };
 
 // Function to format current weather

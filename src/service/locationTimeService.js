@@ -1,4 +1,4 @@
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 let cityTimezones = require("city-timezones");
 
@@ -22,16 +22,24 @@ const getCityName = async (lat, lon) => {
 };
 
 const getTimezone = async (lat, lon) => {
-  const cityName = await getCityName(lat, lon); //Retuns Array of Object
-  // console.log("cityName", cityName);
-  //   const cityToTimeZone = cityTimezones.lookupViaCity(cityName[0].name);
-  const cityToTimeZone = cityTimezones.findFromCityStateProvince(
-    cityName[0].name
-  );
-  // console.log("cityToTimeZone", cityToTimeZone);
-  const timeZoneName = cityToTimeZone[0].timezone;
-  // console.log("timeZoneName", timeZoneName);
-  return timeZoneName;
+  try {
+    const cityName = await getCityName(lat, lon); //Retuns Array of Object
+    // console.log("cityName", cityName);
+    //   const cityToTimeZone = cityTimezones.lookupViaCity(cityName[0].name);
+    const cityToTimeZone = cityTimezones.findFromCityStateProvince(
+      cityName[0].name
+    );
+    // console.log("cityToTimeZone", cityToTimeZone);
+    const timeZoneName = cityToTimeZone[0].timezone;
+    // console.log("timeZoneName", timeZoneName);
+    return timeZoneName;
+  } catch (error) {
+    const defaultTimeZoneName = "Asia/Kolkata";
+    toast.error("Timezone Not Found in API ");
+    console.log("Timezone Not Found");
+    toast.info("Timezone set to default " + defaultTimeZoneName);
+    return defaultTimeZoneName;
+  }
 };
 
 export default getTimezone;
