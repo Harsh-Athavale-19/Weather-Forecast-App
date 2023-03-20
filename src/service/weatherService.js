@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import getTimezone from "./locationTimeService";
 
-const API_KEY = "2aebd46de19bf3e918c2c0bcb2c85580";
+const API_KEY = process.env.REACT_APP_WEATHER_API;
 const BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
 // Function to call api to get all data

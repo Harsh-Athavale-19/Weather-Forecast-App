@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 let cityTimezones = require("city-timezones");
 
-const API_KEY = "2aebd46de19bf3e918c2c0bcb2c85580";
+const API_KEY = process.env.REACT_APP_WEATHER_API;
 const BASE_LOC_URL = "http://api.openweathermap.org/geo/1.0/";
 
 const searchCityName = async (infoType, searchParams) => {
