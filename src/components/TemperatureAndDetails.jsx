@@ -6,7 +6,7 @@ import {
   UilSun,
   UilSunset,
 } from "@iconscout/react-unicons";
-import { formatToLocalTime, iconUrlFromCode } from "../services/weatherService";
+import { formatToLocalTime, iconUrlFromCode } from "../service/weatherService";
 
 const TemperatureAndDetails = ({
   weather: {
@@ -25,13 +25,12 @@ const TemperatureAndDetails = ({
 }) => {
   return (
     <div>
-      {/* Details eg:-Clear */}
-      <div className="flex items-center justify-center py-6 text-xl text-cyan-300 ">
+      <div className="flex items-center justify-center py-3 text-xl text-cyan-300 ">
         <p>{details}</p>
       </div>
 
       <div className="flex flex-row items-center justify-between text-white py-3">
-        <img src={iconUrlFromCode(icon)} alt="icon" className="w-20" />
+        <img src={iconUrlFromCode(icon)} alt="" className="w-20" />
         <p className="text-5xl">{`${temp.toFixed()}°`}</p>
         {/* Alt + 248 = ° */}
 
@@ -51,7 +50,9 @@ const TemperatureAndDetails = ({
           <div className="flex font-light text-sm items-center justify-center">
             <UilWind size={18} className="mr-1" />
             Wind:
-            <span className="font-medium ml-1">{`${speed.toFixed()}Km/h`}</span>
+            <span className="font-medium ml-1">
+              {`${speed.toFixed()}km/hr`}{" "}
+            </span>
           </div>
         </div>
       </div>
