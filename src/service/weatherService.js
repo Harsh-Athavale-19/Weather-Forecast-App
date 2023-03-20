@@ -60,7 +60,7 @@ const formatForecastWeather = async (data) => {
       icon: d.weather[0].icon,
     };
   });
-  console.log("city", city);
+  // console.log("city", city);
   //   console.log("timezone",timezone);
   //   console.log("list",list);
   return { timezone, list };

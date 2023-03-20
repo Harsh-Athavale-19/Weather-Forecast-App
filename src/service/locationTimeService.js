@@ -23,14 +23,14 @@ const getCityName = async (lat, lon) => {
 
 const getTimezone = async (lat, lon) => {
   const cityName = await getCityName(lat, lon); //Retuns Array of Object
-  console.log("cityName", cityName);
+  // console.log("cityName", cityName);
   //   const cityToTimeZone = cityTimezones.lookupViaCity(cityName[0].name);
   const cityToTimeZone = cityTimezones.findFromCityStateProvince(
     cityName[0].name
   );
-  console.log("cityToTimeZone", cityToTimeZone);
+  // console.log("cityToTimeZone", cityToTimeZone);
   const timeZoneName = cityToTimeZone[0].timezone;
-  console.log("timeZoneName", timeZoneName);
+  // console.log("timeZoneName", timeZoneName);
   return timeZoneName;
 };
 
